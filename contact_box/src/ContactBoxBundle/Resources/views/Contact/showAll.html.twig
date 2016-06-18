@@ -1,12 +1,24 @@
 {% extends "::base.html.twig" %}    
 
 {% block title %}All contacts{% endblock %}
+{% block stylesheets %}
+    <style type="text/css">
+        table {border: solid 1px; text-align: center}
+        tr, td {border: solid 1px; text-align: center; padding: 10px}
+    </style>
+{% endblock %}
 
 {% block body %}
     <p><a href="{{ path("contactbox_contact_create") }}">Add new contact</a></p>
+    <br>
+    <table>
     {% for contact in contacts %}
-        <p>{{ contact.surname }} <a href="{{ path("contactbox_contact_show", {"id":contact.id}) }}">{{ contact.name }}</a></p>
+        <tr>
+        <td>{{ contact.surname }} <a href="{{ path("contactbox_contact_show", {"id":contact.id}) }}">{{ contact.name }}</a></td>
+        <td><a href="{{ path("contactbox_contact_modify", {"id":contact.id}) }}">Edit</a></td><td><a href="{{ path("contactbox_contact_delete", {"id":contact.id}) }}">Delete</a></td>
+        </tr>
     {% else %}
         <p>No contacts found.</p>
     {% endfor %}
+    </table>
 {% endblock %}

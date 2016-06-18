@@ -31,7 +31,7 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
             
-            return $this->redirectToRoute("contactbox_contact_showall");
+            return $this->redirectToRoute("contactbox_contact_show", ["id" => $contact->getId()]);
         }
         
         return ["form" => $form->createView()];
@@ -59,7 +59,7 @@ class ContactController extends Controller
         if($form->isValid()){
             $this->getDoctrine()->getManager()->flush();
             
-            return $this->redirectToRoute("contactbox_contact_showall");
+            return $this->redirectToRoute("showAll");
         }
         
         return ["form" => $form->createView(), "addressForm" =>$addressForm->createView()];
@@ -80,7 +80,7 @@ class ContactController extends Controller
         $em->remove($contact);
         $em->flush();
         
-        return $this->redirectToRoute("contactbox_contact_showall");
+        return $this->redirectToRoute("showAll");
     }
     
     /**
@@ -100,7 +100,7 @@ class ContactController extends Controller
     }
     
     /**
-     * @Route("/")
+     * @Route("/", name="showAll")
      * @Template()
      */
     public function showAllAction()
@@ -109,6 +109,7 @@ class ContactController extends Controller
         
         return ["contacts" => $contacts];
     }
+    
     
     /**
      * @Route("/{id}/addAddress")
@@ -131,7 +132,7 @@ class ContactController extends Controller
             $em->persist($address);
             $em->flush();
             
-            return $this->redirectToRoute("contactbox_contact_showall");
+            return $this->redirectToRoute("showAll");
         }
         
     }

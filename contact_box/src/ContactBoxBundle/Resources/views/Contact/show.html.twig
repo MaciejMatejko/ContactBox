@@ -3,14 +3,16 @@
 {% block title %}Contact id {{ contact.id }}{% endblock %}
 
 {% block body %}
-    <div>
+    <div><h2>Personal data:</h2>
         <p>{{ contact.name }} {{ contact.surname }}</p>
         <p>{{ contact.description }}</p>
-        {{ dump(contact) }}
+        <p><a href="{{ path("contactbox_contact_modify", {"id":contact.id}) }}">Edit contact</a></p>
     </div>
-    <div>
+    <div><h2>Addresses:</h2>
+        <ul>
         {% for address in contact.addresses %}
-            <p>{{ address.city }}, {{ address.street }} {{ address.houseNumber }}/{{ address.apartmentNumber }}</p>
+            <li>{{ address.city }}, {{ address.street }} {{ address.houseNumber }}/{{ address.apartmentNumber }}</li>
         {% endfor %}
+        </ul>
     </div>
 {% endblock %}
