@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Contact id {{ contact.id }}{% endblock %}
+
+{% block body %}
+    <div>
+        <p>{{ contact.name }} {{ contact.surname }}</p>
+        <p>{{ contact.description }}</p>
+    </div>
+    <div>
+        {% for address in contact.addresses %}
+            <p>{{ address.city }} {{ address.street }} {{ address.houseNumber }}/{{ address.apartmentNumber }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

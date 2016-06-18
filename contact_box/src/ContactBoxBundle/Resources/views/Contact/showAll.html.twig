@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}    
+
+{% block title %}All contacts{% endblock %}
+
+{% block body %}
+    <p><a href="{{ path("contactbox_contact_create") }}">Add new contact</a></p>
+    {% for contact in contacts %}
+        <p>{{ contact.surname }} <a href="{{ path("contactbox_contact_show", {"id":contact.id}) }}">{{ contact.name }}</a></p>
+    {% else %}
+        <p>No contacts found.</p>
+    {% endfor %}
+{% endblock %}
