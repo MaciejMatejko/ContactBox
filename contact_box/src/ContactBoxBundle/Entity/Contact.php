@@ -2,8 +2,9 @@
 
 namespace ContactBoxBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * Contact
@@ -47,7 +48,8 @@ class Contact
     
     /**
      * @var ArrayCollection
-     * ORM\OneToMany(targetEntity="Address", mappedBy="contact", cascade={"remove"})
+     * 
+     * @ORM\OneToMany(targetEntity="ContactBoxBundle\Entity\Address", mappedBy="contact")
      */
     private $addresses;
     

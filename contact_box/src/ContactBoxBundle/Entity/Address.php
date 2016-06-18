@@ -51,7 +51,9 @@ class Address
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Contact", inversedBy="addresses")
+     *@var type Contact
+     * 
+     * @ORM\ManyToOne(targetEntity="ContactBoxBundle\Entity\Contact", inversedBy="addresses")
      */
     private $contact;
 
