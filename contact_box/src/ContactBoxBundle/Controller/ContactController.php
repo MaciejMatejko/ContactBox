@@ -91,6 +91,8 @@ class ContactController extends Controller
     {
         $contact = $this->getDoctrine()->getRepository("ContactBoxBundle:Contact")->find($id);
         
+        var_dump($contact);
+        
         if(!$contact){
             throw $this->createNotFoundException("Contact not found");
         }
@@ -122,11 +124,11 @@ class ContactController extends Controller
         $form = $this->createFormBuilder($address)->add("city")->add("street")->add("houseNumber")->add("apartmentNumber")->add("submit", "submit")->getForm();
         
         $form->handleRequest($request);
+        $address->setContact($contact);
+        $contact->addAddress($address);
         
         if($form->isValid()){
             $em = $this->getDoctrine()->getManager();
-            $contact->addAddress($address);
-            $address->setContact($contact);
             $em->persist($address);
             $em->flush();
             

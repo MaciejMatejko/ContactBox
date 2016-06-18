@@ -9,7 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Contact
  *
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="ContactBoxBundle\Entity\ContactRepository")
+ * 
  */
 class Contact
 {
@@ -45,6 +46,7 @@ class Contact
     
     
     /**
+     * @var ArrayCollection
      * ORM\OneToMany(targetEntity="Address", mappedBy="contact", cascade={"remove"})
      */
     private $addresses;
@@ -134,5 +136,31 @@ class Contact
         return $this->description;
     }
     
-    
+
+     /**
+     * @param \ContactBoxBundle\Entity\Address $address
+     * @return Contact
+     */
+    public function addAddress(\ContactBoxBundle\Entity\Address $address)
+    {
+        $this->addresses[] = $address;
+
+        return $this;
+    }
+
+     /**
+     * @param \ContactBoxBundle\Entity\Address $address
+     */
+    public function removeAddress(\ContactBoxBundle\Entity\Address $address)
+    {
+        $this->books->removeElement($address);
+    }
+
+     /**
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
 }

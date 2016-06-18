@@ -46,6 +46,7 @@ class Contact
     
     
     /**
+     * @var ArrayCollection
      * ORM\OneToMany(targetEntity="Address", mappedBy="contact", cascade={"remove"})
      */
     private $addresses;
@@ -137,7 +138,8 @@ class Contact
     
 
      /**
-     * 
+     * @param \ContactBoxBundle\Entity\Address $address
+     * @return Contact
      */
     public function addAddress(\ContactBoxBundle\Entity\Address $address)
     {
@@ -147,7 +149,7 @@ class Contact
     }
 
      /**
-     * 
+     * @param \ContactBoxBundle\Entity\Address $address
      */
     public function removeAddress(\ContactBoxBundle\Entity\Address $address)
     {
@@ -155,7 +157,7 @@ class Contact
     }
 
      /**
-     * 
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getAddresses()
     {

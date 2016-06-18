@@ -157,4 +157,27 @@ class Address
     {
         return $this->apartmentNumber;
     }
+
+    /**
+     * Set contact
+     *
+     * @param \ContactBoxBundle\Entity\Contact $contact
+     * @return Address
+     */
+    public function setContact(\ContactBoxBundle\Entity\Contact $contact = null)
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return \ContactBoxBundle\Entity\Contact 
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
 }

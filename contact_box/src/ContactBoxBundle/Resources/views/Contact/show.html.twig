@@ -6,10 +6,11 @@
     <div>
         <p>{{ contact.name }} {{ contact.surname }}</p>
         <p>{{ contact.description }}</p>
+        {{ dump(contact) }}
     </div>
     <div>
         {% for address in contact.addresses %}
-            <p>{{ address.city }} {{ address.street }} {{ address.houseNumber }}/{{ address.apartmentNumber }}</p>
+            <p>{{ address.city }}, {{ address.street }} {{ address.houseNumber }}/{{ address.apartmentNumber }}</p>
         {% endfor %}
     </div>
 {% endblock %}
