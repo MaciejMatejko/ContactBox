@@ -109,11 +109,32 @@ class ContactController extends Controller
      * @Route("/", name="showAll")
      * @Template()
      */
-    public function showAllAction()
+    public function showAllAction(Request $request)
     {
         $contacts = $this->getDoctrine()->getRepository("ContactBoxBundle:Contact")->findAllContactsOrderdBySurname();
+        $data=[];
+        $searchForm=$this->createFormBuilder($data)->add('searchBy', 'choice', array('choices'  => array(
+        'Name' => "name",
+        'Surname' => "surname",
+            ), 'choices_as_values' => true,))->add("Query")->add("search", "submit")->getForm();
         
-        return ["contacts" => $contacts];
+        $searchForm->handleRequest($request);
+        
+        if($searchForm->isValid()){
+            $formData = $searchForm->getData();
+            if($formData["searchBy"] === "name"){
+                $contacts = $this->getDoctrine()->getRepository("ContactBoxBundle:Contact")->findContactsByName($formData["Query"]);
+                
+                return ["contacts" => $contacts, "searchForm" => $searchForm ->createView()];
+            }
+            elseif($formData["searchBy"] === "surname"){
+                $contacts = $this->getDoctrine()->getRepository("ContactBoxBundle:Contact")->findContactsBySurname($formData["Query"]);
+                
+                return ["contacts" => $contacts, "searchForm" => $searchForm ->createView()];
+            }
+        }
+        
+        return ["contacts" => $contacts, "searchForm" => $searchForm ->createView()];
     }
     
     

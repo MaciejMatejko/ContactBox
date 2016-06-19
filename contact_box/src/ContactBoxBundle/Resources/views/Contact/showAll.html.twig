@@ -11,6 +11,10 @@
 {% block body %}
     <p><a href="{{ path("contactbox_contact_create") }}">Add new contact</a></p>
     <br>
+    <div>Search contact:
+        {{ form(searchForm) }}
+    </div>
+    <br>
     <table>
     {% for contact in contacts %}
         <tr>
