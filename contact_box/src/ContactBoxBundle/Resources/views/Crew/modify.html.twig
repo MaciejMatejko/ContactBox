@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Modify group{% endblock %}
+
+{% block body %}
+    <div><h2>Edit personal data:</h2>
+        {{ form(form) }}
+    </div>
+    <br>
+    <div><h2>Edit contacts:</h2>
+        {{ form(contactForm) }}
+        <br>
+        <a href="{{ path("contactbox_contact_create") }}">Create new contact</a>
+        <ul>
+            {% for contact in crew.contacts %}
+                <li>{{ contact.name }} {{ contact.surname }} - {{ crew.description }}<br>
+                <a href="{{ path("contactbox_crew_removecontact", {"id":crew.id, "contactId":contact.id}) }}">Remove contact</a></li>
+                <br>
+            {% else %}
+            <p>No groups found</p>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

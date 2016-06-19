@@ -3,7 +3,7 @@
 {% block title %}Contact id {{ contact.id }}{% endblock %}
 
 {% block body %}
-    <div><h2>Personal data:</h2>
+    <div><h2>Personal info:</h2>
         <p>{{ contact.name }} {{ contact.surname }}</p>
         <p>{{ contact.description }}</p>
         <p><a href="{{ path("contactbox_contact_modify", {"id":contact.id}) }}">Edit contact</a></p>
@@ -38,7 +38,7 @@
     <div><h2>Groups:</h2>
         <ul>
         {% for crew in contact.crews %}
-            <li>{{ crew.name }} - {{ crew.description }}</li>
+            <li><a href="{{ path("contactbox_crew_show", {"id":crew.id}) }}">{{ crew.name }}</a> - {{ crew.description }}</li>
         {% else %}
             <p>No groups found</p>
         {% endfor %}

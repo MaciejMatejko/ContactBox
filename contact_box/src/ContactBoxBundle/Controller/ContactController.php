@@ -12,6 +12,7 @@ use ContactBoxBundle\Entity\Contact;
 use ContactBoxBundle\Entity\Address;
 use ContactBoxBundle\Entity\Phone;
 use ContactBoxBundle\Entity\Email;
+use ContactBoxBundle\Entity\Crew;
 
 class ContactController extends Controller
 {
@@ -63,12 +64,15 @@ class ContactController extends Controller
         $email = new Email();
         $emailForm = $this->createFormBuilder($email)->setAction($this->generateUrl('contactbox_contact_addemail', ["id"=>$id]))->add("address")->add("type")->add("add", "submit")->getForm();
         
+        $data = [];
+        $crewForm = $this->createFormBuilder($data)->setAction($this->generateUrl('contactbox_contact_addcrew', ["id"=>$id]))->add('Group', 'entity', array('class' => 'ContactBoxBundle:Crew', 'choice_label' => 'name'))->add("add", "submit")->getForm();
+        
         if($form->isValid()){
             $this->getDoctrine()->getManager()->flush();
             
             return $this->redirectToRoute("showAll");
         }
-        return ["contact" => $contact, "form" => $form->createView(), "addressForm" =>$addressForm->createView(), "phoneForm" => $phoneForm->createView(), "emailForm" => $emailForm->createView()];
+        return ["contact" => $contact, "form" => $form->createView(), "addressForm" =>$addressForm->createView(), "phoneForm" => $phoneForm->createView(), "emailForm" => $emailForm->createView(), "crewForm" => $crewForm->createView()];
     }
     
     /**
@@ -306,4 +310,54 @@ class ContactController extends Controller
         
     }
     
+    
+    /**
+     * @Route("/{id}/addCrew")
+     */
+    public function addCrewAction(Request $request, $id)
+    {
+        $data=[];
+        $crewForm = $this->createFormBuilder($data)->add('Group', 'entity', array('class' => 'ContactBoxBundle:Crew', 'choice_label' => 'name'))->add("add", "submit")->getForm();
+        $crewForm->handleRequest($request);  
+        $formData=$crewForm->getData();
+        
+        if($crewForm->isValid()){
+            $crew = $formData["Group"];
+            $contact = $this->getDoctrine()->getRepository("ContactBoxBundle:Contact")->find($id);
+            
+            $crew->addContact($contact);
+            $contact->addCrew($crew);
+            
+            $this->getDoctrine()->getManager()->flush();
+            
+            return $this->redirectToRoute("contactbox_contact_show", ["id" => $id]);
+        }
+        
+    }
+    
+    /**
+     * @Route("/{id}/{crewId}/removeCrew")
+     */
+    public function removeCrewAction($id, $crewId)
+    {
+        $contact = $this->getDoctrine()->getRepository("ContactBoxBundle:Contact")->find($id);
+        
+        if(!$contact){
+            throw $this->createNotFoundException("Contact not found");
+        }
+        
+        $crew = $this->getDoctrine()->getRepository("ContactBoxBundle:Crew")->find($crewId);
+        
+        if(!$crew){
+            throw $this->createNotFoundException("Group not found");
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $contact->removeCrew($crew);
+        $crew->removeContact($contact);
+        $em->flush();
+        
+        return $this->redirectToRoute("contactbox_contact_modify", ["id" => $id]);
+        
+    }
 }

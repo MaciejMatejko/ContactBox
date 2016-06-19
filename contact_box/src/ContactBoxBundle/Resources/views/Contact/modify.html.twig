@@ -43,4 +43,18 @@
             {% endfor %}
         </ul>
     </div>
+    <div><h2>Edit groups:</h2>
+        {{ form(crewForm) }}
+        <br>
+        <a href="{{ path("contactbox_crew_new") }}">Create new group</a>
+        <ul>
+            {% for crew in contact.crews %}
+                <li><a href="{{ path("contactbox_crew_show", {"id":crew.id}) }}">{{ crew.name }}</a> - {{ crew.description }}<br>
+                <a href="{{ path("contactbox_contact_removecrew", {"id":contact.id, "crewId":crew.id}) }}">Remove group</a></li>
+                <br>
+            {% else %}
+            <p>No groups found</p>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

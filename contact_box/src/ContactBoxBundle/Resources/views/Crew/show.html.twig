@@ -1,0 +1,21 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Group id {{ crew.id }}{% endblock %}
+
+{% block body %}
+    <p><a href="{{ path("contactbox_crew_showall") }}">Show all groups</a></p>
+    <div><h2>Group info:</h2>
+        <p>{{ crew.name }}</p>
+        <p>{{ crew.description }}</p>
+        <p><a href="{{ path("contactbox_crew_modify", {"id":crew.id}) }}">Edit group</a></p>
+    </div>
+    <div><h2>Contacts:</h2>
+        <ul>
+        {% for contact in crew.contacts %}
+            <li><a href="{{ path("contactbox_contact_show", {"id":contact.id}) }}">{{ contact.name }} {{ contact.surname }}</a> - {{ contact.description }}</li>
+        {% else %}
+            <p>No contacts in this group</p>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

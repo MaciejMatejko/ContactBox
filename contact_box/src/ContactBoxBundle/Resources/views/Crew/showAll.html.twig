@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}    
+
+{% block title %}All contacts{% endblock %}
+{% block stylesheets %}
+    <style type="text/css">
+        table {border: solid 1px; text-align: center}
+        tr, td {border: solid 1px; text-align: center; padding: 10px}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <p><a href="{{ path("contactbox_crew_new") }}">Add new group</a></p>
+    <br>
+    <div>Groups:
+        <table>
+        {% for crew in crews %}
+            <tr>
+            <td>{{ crew.name }} <a href="{{ path("contactbox_crew_show", {"id":crew.id}) }}"></a></td>
+            <td><a href="{{ path("contactbox_crew_modify", {"id":crew.id}) }}">Edit</a></td><td><a href="{{ path("contactbox_crew_delete", {"id":crew.id}) }}">Delete</a></td>
+            </tr>
+        {% else %}
+            <p>No contacts found.</p>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock %}
