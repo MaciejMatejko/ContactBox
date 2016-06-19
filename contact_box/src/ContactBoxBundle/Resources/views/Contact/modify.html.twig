@@ -3,11 +3,18 @@
 {% block title %}Modify contact{% endblock %}
 
 {% block body %}
-    <div>
-    {{ form(form) }}
+    <div><h2>Edit personal data:</h2>
+        {{ form(form) }}
     </div>
     <br>
-    <div>
-    {{ form(addressForm) }}
+    <div><h2>Edit addresses:</h2>
+        {{ form(addressForm) }}
+        <ul>
+            {% for address in contact.addresses %}
+                <li>{{ address.city }}, {{ address.street }} {{ address.houseNumber }}/{{ address.apartmentNumber }}<br>
+                <a href="{{ path("contactbox_contact_deleteaddress", {"id":contact.id, "addressId":address.id}) }}">Delete address</a></li>
+                <br>
+            {% endfor %}
+        </ul>
     <div>
 {% endblock %}

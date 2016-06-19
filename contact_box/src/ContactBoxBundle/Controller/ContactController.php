@@ -62,7 +62,7 @@ class ContactController extends Controller
             return $this->redirectToRoute("showAll");
         }
         
-        return ["form" => $form->createView(), "addressForm" =>$addressForm->createView()];
+        return ["contact" => $contact, "form" => $form->createView(), "addressForm" =>$addressForm->createView()];
     }
     
     /**
@@ -134,6 +134,32 @@ class ContactController extends Controller
             
             return $this->redirectToRoute("showAll");
         }
+        
+    }
+    
+    /**
+     * @Route("/{id}/{addressId}/deleteAddress")
+     */
+    public function deleteAddressAction($id, $addressId)
+    {
+        $contact = $this->getDoctrine()->getRepository("ContactBoxBundle:Contact")->find($id);
+        
+        if(!$contact){
+            throw $this->createNotFoundException("Contact not found");
+        }
+        
+        $address = $this->getDoctrine()->getRepository("ContactBoxBundle:Address")->find($addressId);
+        
+        if(!$address){
+            throw $this->createNotFoundException("Address not found");
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $contact->removeAddress($address);
+        $em->remove($address);
+        $em->flush();
+        
+        return $this->redirectToRoute("contactbox_contact_modify", ["id" => $contact->getId()]);
         
     }
     

@@ -155,7 +155,7 @@ class Contact
      */
     public function removeAddress(\ContactBoxBundle\Entity\Address $address)
     {
-        $this->books->removeElement($address);
+        $this->addresses->removeElement($address);
     }
 
      /**
