@@ -12,7 +12,27 @@
         <ul>
         {% for address in contact.addresses %}
             <li>{{ address.city }}, {{ address.street }} {{ address.houseNumber }}/{{ address.apartmentNumber }}</li>
+        {% else %}
+            <p>No addresses found</p>
         {% endfor %}
         </ul>
     </div>
+    <div><h2>Phones:</h2>
+        <ul>
+        {% for phone in contact.phones %}
+            <li>{{ phone.number }} - {{ phone.type }}</li>
+        {% else %}
+            <p>No phones found</p>
+        {% endfor %}
+        </ul>
+    </div>
+    <div><h2>Emails:</h2>
+    <ul>
+    {% for email in contact.emails %}
+        <li>{{ email.address }} - {{ email.type }}</li>
+    {% else %}
+        <p>No emails found</p>
+    {% endfor %}
+    </ul>
+</div>
 {% endblock %}

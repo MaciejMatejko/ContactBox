@@ -45,18 +45,32 @@ class Contact
      */
     private $description;
     
+    /**
+     * @var ArrayCollection
+     * 
+     * @ORM\OneToMany(targetEntity="ContactBoxBundle\Entity\Address", mappedBy="contact", cascade={"remove"})
+     */
+    private $addresses;
     
     /**
      * @var ArrayCollection
      * 
-     * @ORM\OneToMany(targetEntity="ContactBoxBundle\Entity\Address", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="ContactBoxBundle\Entity\Phone", mappedBy="contact", cascade={"remove"})
      */
-    private $addresses;
+    private $phones;
     
+    /**
+     * @var ArrayCollection
+     * 
+     * @ORM\OneToMany(targetEntity="ContactBoxBundle\Entity\Email", mappedBy="contact", cascade={"remove"})
+     */
+    private $emails;
 
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
+        $this->phones = new ArrayCollection();
+        $this->emails = new ArrayCollection();
     }
     
     /**
@@ -164,5 +178,71 @@ class Contact
     public function getAddresses()
     {
         return $this->addresses;
+    }
+
+    /**
+     * Add phones
+     *
+     * @param \ContactBoxBundle\Entity\Phone $phones
+     * @return Contact
+     */
+    public function addPhone(\ContactBoxBundle\Entity\Phone $phones)
+    {
+        $this->phones[] = $phones;
+
+        return $this;
+    }
+
+    /**
+     * Remove phones
+     *
+     * @param \ContactBoxBundle\Entity\Phone $phones
+     */
+    public function removePhone(\ContactBoxBundle\Entity\Phone $phones)
+    {
+        $this->phones->removeElement($phones);
+    }
+
+    /**
+     * Get phones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhones()
+    {
+        return $this->phones;
+    }
+
+    /**
+     * Add emails
+     *
+     * @param \ContactBoxBundle\Entity\Email $emails
+     * @return Contact
+     */
+    public function addEmail(\ContactBoxBundle\Entity\Email $emails)
+    {
+        $this->emails[] = $emails;
+
+        return $this;
+    }
+
+    /**
+     * Remove emails
+     *
+     * @param \ContactBoxBundle\Entity\Email $emails
+     */
+    public function removeEmail(\ContactBoxBundle\Entity\Email $emails)
+    {
+        $this->emails->removeElement($emails);
+    }
+
+    /**
+     * Get emails
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmails()
+    {
+        return $this->emails;
     }
 }

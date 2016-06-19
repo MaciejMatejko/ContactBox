@@ -14,7 +14,33 @@
                 <li>{{ address.city }}, {{ address.street }} {{ address.houseNumber }}/{{ address.apartmentNumber }}<br>
                 <a href="{{ path("contactbox_contact_deleteaddress", {"id":contact.id, "addressId":address.id}) }}">Delete address</a></li>
                 <br>
+            {% else %}
+            <p>No addresses found</p>
             {% endfor %}
         </ul>
     <div>
+    <div><h2>Edit phones:</h2>
+        {{ form(phoneForm) }}
+        <ul>
+            {% for phone in contact.phones %}
+                <li>{{ phone.number }} - {{ phone.type }}<br>
+                <a href="{{ path("contactbox_contact_deletephone", {"id":contact.id, "phoneId":phone.id}) }}">Delete phone</a></li>
+                <br>
+            {% else %}
+            <p>No phones found</p>
+            {% endfor %}
+        </ul>
+    </div>
+    <div><h2>Edit emails:</h2>
+        {{ form(emailForm) }}
+        <ul>
+            {% for email in contact.emails %}
+                <li>{{ email.address }} - {{ email.type }}<br>
+                <a href="{{ path("contactbox_contact_deleteemail", {"id":contact.id, "emailId":email.id}) }}">Delete email</a></li>
+                <br>
+            {% else %}
+            <p>No emails found</p>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
