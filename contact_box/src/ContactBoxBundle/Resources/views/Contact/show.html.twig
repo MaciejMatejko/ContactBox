@@ -27,12 +27,21 @@
         </ul>
     </div>
     <div><h2>Emails:</h2>
-    <ul>
-    {% for email in contact.emails %}
-        <li>{{ email.address }} - {{ email.type }}</li>
-    {% else %}
-        <p>No emails found</p>
-    {% endfor %}
-    </ul>
-</div>
+        <ul>
+        {% for email in contact.emails %}
+            <li>{{ email.address }} - {{ email.type }}</li>
+        {% else %}
+            <p>No emails found</p>
+        {% endfor %}
+        </ul>
+    </div>
+    <div><h2>Groups:</h2>
+        <ul>
+        {% for crew in contact.crews %}
+            <li>{{ crew.name }} - {{ crew.description }}</li>
+        {% else %}
+            <p>No groups found</p>
+        {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

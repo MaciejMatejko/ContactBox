@@ -11,18 +11,20 @@
 {% block body %}
     <p><a href="{{ path("contactbox_contact_create") }}">Add new contact</a></p>
     <br>
-    <div>Search contact:
+    <div>Search contacts:
         {{ form(searchForm) }}
     </div>
     <br>
-    <table>
-    {% for contact in contacts %}
-        <tr>
-        <td>{{ contact.surname }} <a href="{{ path("contactbox_contact_show", {"id":contact.id}) }}">{{ contact.name }}</a></td>
-        <td><a href="{{ path("contactbox_contact_modify", {"id":contact.id}) }}">Edit</a></td><td><a href="{{ path("contactbox_contact_delete", {"id":contact.id}) }}">Delete</a></td>
-        </tr>
-    {% else %}
-        <p>No contacts found.</p>
-    {% endfor %}
-    </table>
+    <div>Contacts:
+        <table>
+        {% for contact in contacts %}
+            <tr>
+            <td>{{ contact.surname }} <a href="{{ path("contactbox_contact_show", {"id":contact.id}) }}">{{ contact.name }}</a></td>
+            <td><a href="{{ path("contactbox_contact_modify", {"id":contact.id}) }}">Edit</a></td><td><a href="{{ path("contactbox_contact_delete", {"id":contact.id}) }}">Delete</a></td>
+            </tr>
+        {% else %}
+            <p>No contacts found.</p>
+        {% endfor %}
+        </table>
+    </div>
 {% endblock %}

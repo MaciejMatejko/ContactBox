@@ -65,12 +65,21 @@ class Contact
      * @ORM\OneToMany(targetEntity="ContactBoxBundle\Entity\Email", mappedBy="contact", cascade={"remove"})
      */
     private $emails;
+    
+    /**
+     * @var ArrayCollection
+     * 
+     * @ORM\ManyToMany(targetEntity="Crew", mappedBy="contacts")
+     * @ORM\JoinTable(name="contac_crew")
+     */
+    private $crews;
 
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
         $this->phones = new ArrayCollection();
         $this->emails = new ArrayCollection();
+        $this->crews = new ArrayCollection();
     }
     
     /**
@@ -183,12 +192,12 @@ class Contact
     /**
      * Add phones
      *
-     * @param \ContactBoxBundle\Entity\Phone $phones
+     * @param \ContactBoxBundle\Entity\Phone $phone
      * @return Contact
      */
-    public function addPhone(\ContactBoxBundle\Entity\Phone $phones)
+    public function addPhone(\ContactBoxBundle\Entity\Phone $phone)
     {
-        $this->phones[] = $phones;
+        $this->phones[] = $phone;
 
         return $this;
     }
@@ -196,11 +205,11 @@ class Contact
     /**
      * Remove phones
      *
-     * @param \ContactBoxBundle\Entity\Phone $phones
+     * @param \ContactBoxBundle\Entity\Phone $phone
      */
-    public function removePhone(\ContactBoxBundle\Entity\Phone $phones)
+    public function removePhone(\ContactBoxBundle\Entity\Phone $phone)
     {
-        $this->phones->removeElement($phones);
+        $this->phones->removeElement($phone);
     }
 
     /**
@@ -216,12 +225,12 @@ class Contact
     /**
      * Add emails
      *
-     * @param \ContactBoxBundle\Entity\Email $emails
+     * @param \ContactBoxBundle\Entity\Email $email
      * @return Contact
      */
-    public function addEmail(\ContactBoxBundle\Entity\Email $emails)
+    public function addEmail(\ContactBoxBundle\Entity\Email $email)
     {
-        $this->emails[] = $emails;
+        $this->emails[] = $email;
 
         return $this;
     }
@@ -229,11 +238,11 @@ class Contact
     /**
      * Remove emails
      *
-     * @param \ContactBoxBundle\Entity\Email $emails
+     * @param \ContactBoxBundle\Entity\Email $email
      */
-    public function removeEmail(\ContactBoxBundle\Entity\Email $emails)
+    public function removeEmail(\ContactBoxBundle\Entity\Email $email)
     {
-        $this->emails->removeElement($emails);
+        $this->emails->removeElement($email);
     }
 
     /**
@@ -244,5 +253,38 @@ class Contact
     public function getEmails()
     {
         return $this->emails;
+    }
+
+    /**
+     * Add crews
+     *
+     * @param \ContactBoxBundle\Entity\Crew $crew
+     * @return Contact
+     */
+    public function addCrew(\ContactBoxBundle\Entity\Crew $crew)
+    {
+        $this->crews[] = $crew;
+
+        return $this;
+    }
+
+    /**
+     * Remove crews
+     *
+     * @param \ContactBoxBundle\Entity\Crew $crew
+     */
+    public function removeCrew(\ContactBoxBundle\Entity\Crew $crew)
+    {
+        $this->crews->removeElement($crew);
+    }
+
+    /**
+     * Get crews
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCrews()
+    {
+        return $this->crews;
     }
 }

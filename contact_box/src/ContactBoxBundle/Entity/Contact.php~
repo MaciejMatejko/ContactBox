@@ -65,12 +65,20 @@ class Contact
      * @ORM\OneToMany(targetEntity="ContactBoxBundle\Entity\Email", mappedBy="contact", cascade={"remove"})
      */
     private $emails;
+    
+    /**
+     * @var ArrayCollection
+     * 
+     * @ORM\ManyToMany(targetEntity="Crew", mappedBy="contacts")
+     */
+    private $crews;
 
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
         $this->phones = new ArrayCollection();
         $this->emails = new ArrayCollection();
+        $this->crews = new ArrayCollection();
     }
     
     /**
@@ -211,5 +219,38 @@ class Contact
     public function getPhones()
     {
         return $this->phones;
+    }
+
+    /**
+     * Add emails
+     *
+     * @param \ContactBoxBundle\Entity\Email $emails
+     * @return Contact
+     */
+    public function addEmail(\ContactBoxBundle\Entity\Email $emails)
+    {
+        $this->emails[] = $emails;
+
+        return $this;
+    }
+
+    /**
+     * Remove emails
+     *
+     * @param \ContactBoxBundle\Entity\Email $emails
+     */
+    public function removeEmail(\ContactBoxBundle\Entity\Email $emails)
+    {
+        $this->emails->removeElement($emails);
+    }
+
+    /**
+     * Get emails
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmails()
+    {
+        return $this->emails;
     }
 }
